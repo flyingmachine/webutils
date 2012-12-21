@@ -32,8 +32,10 @@ Examples:
 (path {:username "joe"} :username "users" "edit")
 ;; "/users/joe/edit"
 
+;; create-path-fns generates a bunch of related path functions. For example,
+;; if you run the following:
 (create-path-fns "user" :username "edit" "posts" "comments" "notification-settings")
-;; equivalent to:
+;; then it's equivalent to
 
 (clojure.core/defn
  user-path
@@ -68,7 +70,9 @@ Examples:
   "users"
   "notification-settings"))
 
-;; Call the generated functions:
+;; 
+;; Now call the generated functions:
+;;
 
 (user-path {:username "bob"})
 ;; "/users/bob"
@@ -134,7 +138,7 @@ Example:
 ;; with keys :current-auth, :errors, :params, and :user
 (def show-user
  [params]
- (view view/show-user :user (user/one params))
+ (mainview view/show-user :user (user/one params))
 ```
 
 ## License
