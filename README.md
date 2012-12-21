@@ -107,9 +107,11 @@ Ultimately, you'll write something like:
 (let [params (:params res)]
   (if-valid
    params validations errors
+   ;; When the params are valid, do this...
    (do
      (user/update! params)
      (res/redirect (user-path params)))
+   ;; ...otherwise, do this
    (view/edit params)))
 ```
 
