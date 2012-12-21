@@ -20,33 +20,33 @@ expands to:
 
  (clojure.core/defn
   user-path
-  [G__4013]
-  (gratefulplace.views.common/path G__4013 :username \"users\"))
-
+  [record]
+  (flyingmachine.paths/path record :username \"users\"))
+ 
  (clojure.core/defn
   user-edit-path
-  [G__4014]
-  (gratefulplace.views.common/path G__4014 :username \"users\" \"edit\"))
-
+  [record]
+  (flyingmachine.paths/path record :username \"users\" \"edit\"))
+ 
  (clojure.core/defn
   user-posts-path
-  [G__4015]
-  (gratefulplace.views.common/path G__4015 :username \"users\" \"posts\"))
-
+  [record]
+  (flyingmachine.paths/path record :username \"users\" \"posts\"))
+ 
  (clojure.core/defn
   user-comments-path
-  [G__4016]
-  (gratefulplace.views.common/path
-   G__4016
+  [record]
+  (flyingmachine.paths/path
+   record
    :username
    \"users\"
    \"comments\"))
-
+ 
  (clojure.core/defn
   user-notification-settings-path
-  [G__4017]
-  (gratefulplace.views.common/path
-   G__4017
+  [record]
+  (flyingmachine.paths/path
+   record
    :username
    \"users\"
    \"notification-settings\")))"
