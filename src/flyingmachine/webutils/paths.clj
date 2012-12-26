@@ -65,8 +65,8 @@ expands to:
                   ;; TODO is there a briefer way of doing this?
                   ;; maybe make a suffix version and non-suffix version
                   ~(if suffix
-                     `(path ~x ~url-id ~(str record-type "s") ~suffix)
-                     `(path ~x ~url-id ~(str record-type "s"))))
+                     `(path ~x ~url-id ~(str (clojure.string/replace record-type #":" "/") "s") ~suffix)
+                     `(path ~x ~url-id ~(str (clojure.string/replace record-type #":" "/") "s"))))
                ([~x & ~y]
                   (str (~fn-name ~x) (apply str ~y))))))
         (conj suffixes nil))))

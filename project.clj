@@ -1,4 +1,4 @@
-(defproject com.flyingmachine/webutils "0.1.0"
+(defproject com.flyingmachine/webutils "0.1.1"
   :description "some web app utilities"
   :url "http://github.com/flyingmachine/webutils"
   :license {:name "Eclipse Public License"

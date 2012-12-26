@@ -31,4 +31,9 @@
     (is (= (post-path 1 "#comments")
            "/posts/1#comments"))
     (is (= (post-path 1 "#" "comments")
-           "/posts/1#comments"))))
+           "/posts/1#comments")))
+  
+  (testing "handles path namespacing"
+    (create-path-fns "admin:post" :id "edit" "destroy")
+    (is (= (admin:post-edit-path {:id 1})
+           "/admin/posts/1/edit"))))
