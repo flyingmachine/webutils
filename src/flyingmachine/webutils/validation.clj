@@ -25,9 +25,9 @@ the field name specified in the validation"}
 validation-check-groups is a seq of alternating messages and
 validation checks"
   [value validation-check-groups]
-  (for [group (partition 2 validation-check-groups)
-        :when (not ((last group) value))]
-    (first group)))
+  (for [[error-message validation] (partition 2 validation-check-groups)
+        :when (not (validation value))]
+    error-message))
 
 (defn validate
   "returns a map of errors"
