@@ -11,34 +11,33 @@ the field name specified in the validation"}
   flyingmachine.webutils.validation)
 
 
-(defmacro if-valid
-  [to-validate validations errors-name & then-else]
-  `(let [to-validate# ~to-validate
-         validations# ~validations
-         ~errors-name (validate to-validate# validations#)]
-     (if (empty? ~errors-name)
-       ~(first then-else)
-       ~(second then-else))))
-
 (defn error-messages-for
   "return a vector of error messages or nil if no errors
-validation-check-groups is a seq of alternating messages and
-validation checks"
+   validation-check-groups is a seq of alternating messages and
+   validation checks"
   [value validation-check-groups]
   (for [[error-message validation] (partition 2 validation-check-groups)
         :when (not (validation value))]
     error-message))
 
 (defn validate
-  "returns a map of errors"
+  "returns a map with a vec of errors for each key"
   [to-validate validations]
-  (let [validations (vec validations)]
-    (loop [errors {} v validations]
-      (if-let [validation (first v)]
-        (let [[fieldname validation-check-groups] validation
-              value (get to-validate fieldname)
-              error-messages (error-messages-for value validation-check-groups)]
-          (if (empty? error-messages)
-            (recur errors (rest v))
-            (recur (assoc errors fieldname error-messages) (rest v))))
-        errors))))
+  (loop [errors {}
+         v (seq validations)]
+    (if-let [validation (first v)]
+      (let [[fieldname validation-check-groups] validation
+            value (get to-validate fieldname)
+            error-messages (error-messages-for value validation-check-groups)]
+        (if (empty? error-messages)
+          (recur errors (rest v))
+          (recur (assoc errors fieldname error-messages) (rest v))))
+      errors)))
+
+(defmacro if-valid
+  [to-validate validations errors-name & then-else]
+  `(let [to-validate# ~to-validate
+         validations# ~validations
+         ~errors-name (validate to-validate# validations#)]
+     (if (empty? ~errors-name)
+       ~@then-else)))
