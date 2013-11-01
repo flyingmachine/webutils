@@ -23,16 +23,15 @@ the field name specified in the validation"}
 (defn validate
   "returns a map with a vec of errors for each key"
   [to-validate validations]
-  (loop [errors {}
-         remaining-validations (seq validations)]
-    (if-let [validation (first remaining-validations)]
-      (let [[fieldname validation-check-groups] validation
-            value (get to-validate fieldname)
-            error-messages (error-messages-for value validation-check-groups)]
-        (if (empty? error-messages)
-          (recur errors (rest remaining-validations))
-          (recur (assoc errors fieldname error-messages) (rest remaining-validations))))
-      errors)))
+  (reduce (fn [errors validation]
+            (let [[fieldname validation-check-groups] validation
+                  value (get to-validate fieldname)
+                  error-messages (error-messages-for value validation-check-groups)]
+              (if (empty? error-messages)
+                errors
+                (assoc errors fieldname error-messages))))
+          {}
+          validations))
 
 (defmacro if-valid
   "Handle validation more concisely"
