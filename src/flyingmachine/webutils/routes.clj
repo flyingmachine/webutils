@@ -76,3 +76,10 @@
       ~@(map (fn [[_ action-config]]
                (route-template name action-config))
              (filter second actions)))))
+
+(defmacro defroutemacro
+  [macro-name & globals]
+  `(defmacro ~macro-name
+     [name# & options#]
+     (let [globals# (quote ~globals)]
+       `(resource-routes ~name# ~@(into globals# (reverse options#))))))
