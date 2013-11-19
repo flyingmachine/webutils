@@ -52,7 +52,7 @@
   (testing "can supply action configs"
     (defroutes custom-routes
       (resource-routes fc
-                       :_except [:update! :query]
+                       :except [:update! :query]
                        :show {:method PUT
                               :action-name custom-show}))
     (let [test-app (app custom-routes)]

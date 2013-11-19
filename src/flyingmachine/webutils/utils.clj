@@ -36,16 +36,16 @@
   (apply hash-map seq))
 
 (defn prune
-  [x {:keys [_except _only]}]
-  (let [e? (empty? _except)
-        o? (empty? _only)]
+  [x {:keys [except only]}]
+  (let [e? (empty? except)
+        o? (empty? only)]
     (if (not (or e? o?))
-      (throw (java.lang.IllegalArgumentException. "You can specify :_except or :_only, but not both")))
+      (throw (java.lang.IllegalArgumentException. "You can specify :except or :only, but not both")))
     (if (and e? o?)
       x
       (if e?
-        (select-keys x _only)
-        (apply dissoc x _except)))))
+        (select-keys x only)
+        (apply dissoc x except)))))
 
 (defn xml-str
  "Like clojure.core/str but escapes < > and &."

@@ -55,7 +55,7 @@
 
 (defn- separate-options
   [options]
-  (let [prune-keys [:_except :_only]
+  (let [prune-keys [:except :only]
         global-keys [:route-op :method :action-name :suffixes :route-args]]
     {:prune-opts (select-keys options prune-keys)
      :action-opts (apply dissoc options (into prune-keys global-keys))
