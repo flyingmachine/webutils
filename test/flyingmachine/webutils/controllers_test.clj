@@ -2,7 +2,6 @@
   (:use clojure.test
         flyingmachine.webutils.controllers))
 
-
 (defview testview
   {:constant "constant"
    :scoped   'scoped
