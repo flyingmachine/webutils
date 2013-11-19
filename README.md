@@ -143,6 +143,11 @@ Example:
  (mainview view/show-user :user (user/one params))
 ```
 
+## TODO
+
+* Allow custom resource-actions in routes
+* Better naming in routes
+
 ## License
 
 Copyright © 2012 Daniel Higginbotham

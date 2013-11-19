@@ -18,6 +18,7 @@
   (str "/" (apply str (interpose "/" (into [resource-name] suffixes)))))
 
 (defn action
+  "Used to produce name of function which should be called for a route"
   [resource-name action]
   (symbol (str resource-name "/" action)))
 
@@ -68,7 +69,8 @@
 
 (defmacro resource-routes
   [name & options]
-  (let [{:keys [action-opts prune-opts globals]} (separate-options (rest-map options))
+  (let [
+        {:keys [action-opts prune-opts globals]} (separate-options (rest-map options))
         actions (prune (merge-with merge (merge-globals globals) action-opts) prune-opts)]
     `(compojure.core/routes
       ~@(map (fn [[_ action-config]]
