@@ -14,8 +14,8 @@
               (~handler ~params (~auth-fn req#)))))
 
 (defn resource-path
-  [resource-name & suffixes]
-  (str "/" (apply str (interpose "/" (into [resource-name] suffixes)))))
+  [resource-name prefixes suffixes]
+  (str "/" (apply str (interpose "/" (filter identity (flatten (conj (vec prefixes) [resource-name] suffixes)))))))
 
 (defn action
   "Used to produce name of function which should be called for a route"
@@ -26,10 +26,10 @@
   "Example return:
    (route GET \"/widgets\" widgets/query)
    (authroute POST \"/widgets\" widgets/create! friend/auth)"
-  [resource-name {:keys [route-op method action-name suffixes route-args]}]
+  [resource-name {:keys [route-op method action-name prefixes suffixes route-args]}]
   `(~route-op
     ~method
-    ~(apply resource-path resource-name suffixes)
+    ~(resource-path resource-name prefixes suffixes)
     ~(action resource-name action-name)
     ~@route-args))
 
@@ -56,7 +56,7 @@
 (defn- separate-options
   [options]
   (let [prune-keys [:except :only]
-        global-keys [:route-op :method :action-name :suffixes :route-args]]
+        global-keys [:route-op :method :action-name :prefixes :suffixes :route-args]]
     {:prune-opts (select-keys options prune-keys)
      :action-opts (apply dissoc options (into prune-keys global-keys))
      :globals (select-keys options global-keys)}))

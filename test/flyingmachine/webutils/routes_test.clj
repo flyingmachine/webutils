@@ -69,9 +69,10 @@
              (body "fake-controller-auth-create!-name-joe-userid-joeschmoe")))))
   (testing "can define globals"
     (defroutes global-routes (resource-routes fc
+                                              :prefixes [a b]
                                               :route-op authroute
                                               :route-args [auth-info]
                                               :create! {:action-name auth-create!}))
     (let [test-app (app global-routes)]
-      (is (= (test-app (req/request :post "/fc" {:name "joe"}))
+      (is (= (test-app (req/request :post "/a/b/fc" {:name "joe"}))
              (body "fake-controller-auth-create!-name-joe-userid-joeschmoe"))))))
