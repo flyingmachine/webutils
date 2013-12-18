@@ -13,7 +13,7 @@ The code is all extracted from https://github.com/flyingmachine/gratefulplace , 
 Add this to your project.clj:
 
 ```clojure
-[com.flyingmachine/webutils "0.1.0"]
+[com.flyingmachine/webutils "0.1.6"]
 ```
 
 There are a handful of namespaces:
